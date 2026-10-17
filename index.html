@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CekNomor - Pencarian Nomor HP</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #0b1120;
+      color: #f8fafc;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 22px 20px;
+      border-bottom: 1px solid #263248;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #60a5fa;
+    }
+
+    .badge {
+      color: #34d399;
+      font-size: 12px;
+      border: 1px solid #34d399;
+      padding: 6px 10px;
+      border-radius: 20px;
+    }
+
+    main {
+      width: 100%;
+      max-width: 650px;
+      margin: 65px auto;
+      padding: 20px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 14px;
+    }
+
+    h1 span {
+      color: #60a5fa;
+    }
+
+    .subtitle {
+      color: #94a3b8;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .search-box {
+      background: #151e30;
+      border: 1px solid #29374d;
+      padding: 22px;
+      border-radius: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #334155;
+      background: #0b1120;
+      color: white;
+      font-size: 16px;
+      outline: none;
+      margin-bottom: 14px;
+    }
+
+    input:focus {
+      border-color: #60a5fa;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      background: #3b82f6;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:active {
+      background: #2563eb;
+    }
+
+    #hasil {
+      display: none;
+      margin-top: 20px;
+      padding: 18px;
+      border-radius: 12px;
+      background: #0b1120;
+      border: 1px solid #334155;
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+    }
+
+    .info {
+      margin-top: 25px;
+      padding: 18px;
+      border-radius: 12px;
+      background: #102b29;
+      color: #a7f3d0;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 15px;
+      color: #64748b;
+      font-size: 12px;
+      border-top: 1px solid #263248;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 480px) {
+      main {
+        margin-top: 40px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">CekNomor.</div>
+    <div class="badge">PENCARIAN NOMOR HP</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="icon">🔎</div>
+      <h1>Kenali Nomor <span>Misterius</span></h1>
+      <p class="subtitle">
+        Masukkan nomor HP untuk memulai pencarian.
+        Bantu komunitas mengenali panggilan yang tidak dikenal.
+      </p>
+    </section>
+
+    <section class="search-box">
+      <label for="nomor">Nomor telepon</label>
+      <input
+        type="tel"
+        id="nomor"
+        placeholder="Contoh: 081234567890"
+        autocomplete="off"
+      >
+      <button onclick="cariNomor()">🔍 Cari Nomor</button>
+
+      <div id="hasil" aria-live="polite"></div>
+    </section>
+
+    <div class="info">
+      🛡️ <strong>Gunakan dengan bijak</strong><br>
+      Pencarian ini belum terhubung ke database nomor telepon.
+      Jangan membagikan data pribadi orang lain tanpa izin.
+    </div>
+  </main>
+
+  <footer>
+    © 2026 CekNomor · Pencarian Nomor HP dan Laporan Komunitas
+  </footer>
+
+  <script>
+    function cariNomor() {
+      const input = document.getElementById("nomor");
+      const hasil = document.getElementById("hasil");
+      const nomor = input.value.trim();
+
+      hasil.style.display = "block";
+
+      if (!nomor) {
+        hasil.textContent = "Masukkan nomor HP terlebih dahulu.";
+        input.focus();
+        return;
+      }
+
+      if (!/^[+0-9\s()-]{7,20}$/.test(nomor)) {
+        hasil.textContent = "Format nomor tidak valid. Periksa kembali.";
+        return;
+      }
+
+      hasil.textContent =
+        "Nomor yang dimasukkan: " + nomor +
+        ". Fitur pencarian database belum tersedia. " +
+        "Website ini baru berupa tampilan awal.";
+    }
+  </script>
+
+</body>
+</html>
