@@ -266,7 +266,31 @@ if (/^(0811|0812|0813|0821|0822|0823|0851|0852|0853)/.test("0" + prefix)) {
       `;
     }
         
+function tampilkanRiwayat() {
+  const riwayat = JSON.parse(
+    localStorage.getItem("riwayatNomor") || "[]"
+  );
 
+  let html = "<h3>Riwayat Pencarian</h3>";
+
+  if (riwayat.length === 0) {
+    html += "<p>Belum ada riwayat pencarian.</p>";
+  } else {
+    riwayat.forEach(item => {
+      html += `<p>
+        Nomor: ${item.nomor}<br>
+        Operator: ${item.operator}<br>
+        Waktu: ${item.waktu}
+      </p><hr>`;
+    });
+  }
+
+  const elemen = document.getElementById("riwayat");
+
+  if (elemen) {
+    elemen.innerHTML = html;
+  }
+}
   </script>
 
 </body>
