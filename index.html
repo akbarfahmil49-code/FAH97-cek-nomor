@@ -198,6 +198,7 @@
 
   <footer>
     © 2026 CekNomor  Pencarian Nomor HP dan Laporan Komunitas
+    Email:akbarfahmil49@gmail.com
   </footer>
 
   <script>
@@ -241,7 +242,15 @@ if (/^(0811|0812|0813|0821|0822|0823|0851|0852|0853)/.test("0" + prefix)) {
 } else if (/^(0881|0882|0883|0884|0885|0886|0887|0888|0889)/.test("0" + prefix)) {
   operator = "Smartfren";
 }
-
+      hasil.innerHTML = `
+        <strong>Nomor:</strong> ${nomor}<br>
+        <strong>Operator:</strong> ${operator}<br><br>
+        <small>
+          Operator diperkirakan berdasarkan prefix nomor.
+          Hasil ini bukan identitas pemilik nomor.
+        </small>
+      `;
+    }
         
 
   </script>
