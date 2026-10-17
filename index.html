@@ -215,10 +215,14 @@
         return;
       }
 
-      if (!/^[+0-9\s()-]{7,20}$/.test(nomor)) {
-        hasil.textContent = "Format nomor tidak valid. Periksa kembali.";
-        return;
-      }
+      const angkaValidasi = nomor.replace(/\D/g, "");
+
+if (!/^(08|628|\+628)/.test(nomor.replace(/[\s()-]/g, "")) ||
+    angkaValidasi.length < 10 ||
+    angkaValidasi.length > 15) {
+  hasil.textContent = "Format nomor HP Indonesia tidak valid.";
+  return;
+}
 
     const angka = nomor.replace(/\D/g, "");
 let operator = "Belum dapat diperkirakan";
