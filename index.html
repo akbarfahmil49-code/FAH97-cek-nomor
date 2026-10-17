@@ -1,424 +1,302 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FAH97 CekNomor - Pencarian Nomor HP</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAH97 Cek Nomor</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #0b1120;
-      color: #f8fafc;
-      min-height: 100vh;
-    }
-
-    header {
-      padding: 22px 20px;
-      border-bottom: 1px solid #263248;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #60a5fa;
-    }
-
-    .badge {
-      color: #34d399;
-      font-size: 12px;
-      border: 1px solid #34d399;
-      padding: 6px 10px;
-      border-radius: 20px;
-    }
-
-    main {
-      width: 100%;
-      max-width: 650px;
-      margin: 65px auto;
-      padding: 20px;
-    }
-
-    .hero {
-      text-align: center;
-      margin-bottom: 35px;
-    }
-
-    .icon {
-      font-size: 48px;
-      margin-bottom: 20px;
-    }
-
-    h1 {
-      font-size: 32px;
-      margin-bottom: 14px;
-    }
-
-    h1 span {
-      color: #60a5fa;
-    }
-
-    .subtitle {
-      color: #94a3b8;
-      line-height: 1.7;
-      font-size: 15px;
-    }
-
-    .search-box {
-      background: #151e30;
-      border: 1px solid #29374d;
-      padding: 22px;
-      border-radius: 18px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 12px;
-      font-size: 14px;
-      font-weight: bold;
-    }
-
-    input {
-      width: 100%;
-      padding: 15px;
-      border-radius: 10px;
-      border: 1px solid #334155;
-      background: #0b1120;
-      color: white;
-      font-size: 16px;
-      outline: none;
-      margin-bottom: 14px;
-    }
-
-    input:focus {
-      border-color: #60a5fa;
-    }
-
-    button {
-      width: 100%;
-      padding: 15px;
-      background: #3b82f6;
-      border: none;
-      border-radius: 10px;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:active {
-      background: #2563eb;
-    }
-
-    #hasil {
-      display: none;
-      margin-top: 20px;
-      padding: 18px;
-      border-radius: 12px;
-      background: #0b1120;
-      border: 1px solid #334155;
-      line-height: 1.8;
-      overflow-wrap: anywhere;
-    }
-
-    #riwayat {
-      margin-top: 20px;
-      padding: 18px;
-      border-radius: 12px;
-      background: #0b1120;
-      border: 1px solid #334155;
-      line-height: 1.8;
-      overflow-wrap: anywhere;
-    }
-
-    #riwayat h3 {
-      margin-bottom: 12px;
-    }
-
-    .item-riwayat {
-      padding: 12px 0;
-      border-bottom: 1px solid #334155;
-    }
-
-    .hapus-button {
-      margin-top: 12px;
-      background: #b91c1c;
-    }
-
-    .info {
-      margin-top: 25px;
-      padding: 18px;
-      border-radius: 12px;
-      background: #102b29;
-      color: #a7f3d0;
-      font-size: 13px;
-      line-height: 1.7;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px 15px;
-      color: #64748b;
-      font-size: 12px;
-      border-top: 1px solid #263248;
-      line-height: 1.8;
-    }
-
-    @media (max-width: 480px) {
-      main {
-        margin-top: 40px;
-      }
-
-      h1 {
-        font-size: 28px;
-      }
-    }
-  </style>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#0b1120;color:#f8fafc;min-height:100vh}
+header{padding:22px 20px;border-bottom:1px solid #263248;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.logo{font-size:22px;font-weight:bold;color:#60a5fa}
+.badge{color:#34d399;font-size:11px;border:1px solid #34d399;padding:6px 8px;border-radius:20px}
+main{max-width:650px;margin:50px auto;padding:20px}
+.hero{text-align:center;margin-bottom:30px}
+.icon{font-size:48px;margin-bottom:15px}
+h1{font-size:30px;margin-bottom:14px}
+h1 span{color:#60a5fa}
+.subtitle{color:#94a3b8;line-height:1.7;font-size:15px}
+.search-box{background:#151e30;border:1px solid #29374d;padding:22px;border-radius:18px}
+label{display:block;margin-bottom:12px;font-size:14px;font-weight:bold}
+input{width:100%;padding:15px;border-radius:10px;border:1px solid #334155;background:#0b1120;color:white;font-size:16px;margin-bottom:14px}
+button{width:100%;padding:15px;background:#3b82f6;border:0;border-radius:10px;color:white;font-size:16px;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.6}
+#hasil,#riwayat{margin-top:20px;padding:18px;border-radius:12px;background:#0b1120;border:1px solid #334155;line-height:1.8;overflow-wrap:anywhere}
+#hasil{display:none}
+#riwayat h3{margin-bottom:12px}
+.item-riwayat{padding:12px 0;border-bottom:1px solid #334155}
+.hapus-button{margin-top:12px;background:#b91c1c}
+.info{margin-top:25px;padding:18px;border-radius:12px;background:#102b29;color:#a7f3d0;font-size:13px;line-height:1.7}
+footer{text-align:center;padding:25px 15px;color:#64748b;font-size:12px;border-top:1px solid #263248;line-height:1.8}
+</style>
 </head>
 
 <body>
-  <header>
-    <div class="logo">FAH97 Cek Nomor</div>
-    <div class="badge">PENCARIAN NOMOR HP</div>
-  </header>
+<header>
+  <div class="logo">FAH97 Cek Nomor</div>
+  <div class="badge">PENCARIAN NOMOR HP</div>
+</header>
 
-  <main>
-    <section class="hero">
-      <div class="icon">🔎</div>
-      <h1>Kenali Nomor <span>Misterius</span></h1>
-      <p class="subtitle">
-        Masukkan nomor HP untuk memulai pencarian.
-        Bantu komunitas mengenali panggilan yang tidak dikenal.
-      </p>
-    </section>
+<main>
+  <section class="hero">
+    <div class="icon">🔎</div>
+    <h1>Kenali Nomor <span>Misterius</span></h1>
+    <p class="subtitle">Masukkan nomor HP untuk mencari informasi penelepon jika tersedia.</p>
+  </section>
 
-    <section class="search-box">
-      <label for="nomor">Nomor telepon</label>
+  <section class="search-box">
+    <label for="nomor">Nomor telepon</label>
+    <input type="tel" id="nomor" placeholder="Contoh: 081234567890" autocomplete="off">
+    <button id="tombolCari" onclick="cariNomor()">🔍 Cari Nomor</button>
+    <div id="hasil" aria-live="polite"></div>
+  </section>
 
-      <input
-        type="tel"
-        id="nomor"
-        placeholder="Contoh: 081234567890"
-        autocomplete="off"
-      >
+  <section id="riwayat"></section>
 
-      <button onclick="cariNomor()">🔍 Cari Nomor</button>
+  <div class="info">
+    🛡️ <strong>Gunakan dengan bijak</strong><br>
+    Nama penelepon bukan bukti identitas resmi pemilik nomor.
+    Data dapat tidak tersedia atau tidak akurat.
+    Riwayat disimpan di browser perangkat ini.
+  </div>
+</main>
 
-      <div id="hasil" aria-live="polite"></div>
-    </section>
+<footer>
+  © 2026 FAH97 Cek Nomor<br>
+  Kritik dan saran: @FahAkb97@gmail.com
+</footer>
 
-    <section id="riwayat">
-      <h3>Riwayat Pencarian</h3>
-      <p>Belum ada riwayat pencarian.</p>
-    </section>
+<script>
+/*
+  Masukkan API key di antara tanda kutip di bawah.
+  Catatan: API key dalam HTML publik bisa dilihat orang lain.
+*/
+const API_KEY = "MASUKKAN_API_KEY_KAMU";
 
-    <div class="info">
-      🛡️ <strong>Gunakan dengan bijak</strong><br>
-      Pencarian ini belum terhubung ke database nomor telepon.
-      Jangan membagikan data pribadi orang lain tanpa izin.
-      Riwayat disimpan di browser perangkat ini.
-    </div>
-  </main>
+async function cariNomor() {
+  const input = document.getElementById("nomor");
+  const hasil = document.getElementById("hasil");
+  const tombol = document.getElementById("tombolCari");
+  const nomor = input.value.trim();
 
-  <footer>
-    © 2026 FAH97 Cek Nomor<br>
-    Kritik dan saran: @FahAkb97@gmail.com
-  </footer>
+  hasil.style.display = "block";
+  hasil.replaceChildren();
 
-  <script>
-    function cariNomor() {
-      const input = document.getElementById("nomor");
-      const hasil = document.getElementById("hasil");
-      const nomor = input.value.trim();
-
-      hasil.style.display = "block";
-
-      if (!nomor) {
-        hasil.textContent = "Masukkan nomor HP terlebih dahulu.";
-        input.focus();
-        return;
-      }
-
-      const nomorBersih = nomor.replace(/[\s()-]/g, "");
-
-      if (!/^(08|628|\+628)/.test(nomorBersih)) {
-        hasil.textContent = "Gunakan nomor HP Indonesia dengan awalan 08 atau 62.";
-        return;
-      }
-
-      const angka = nomor.replace(/\D/g, "");
-
-      if (angka.length < 10 || angka.length > 15) {
-        hasil.textContent = "Panjang nomor HP tidak valid.";
-        return;
-      }
-
-      const prefix = angka.startsWith("62")
-        ? "0" + angka.slice(2)
-        : angka.startsWith("0")
-        ? angka
-        : "";
-
-      let operator = "Belum dapat diperkirakan";
-
-      if (/^08(11|12|13|21|22|23|51|52|53)/.test(prefix)) {
-        operator = "Telkomsel";
-      } else if (/^08(14|15|16|55|56|57|58)/.test(prefix)) {
-        operator = "Indosat";
-      } else if (/^08(17|18|19|59|77|78)/.test(prefix)) {
-        operator = "XL";
-      } else if (/^08(31|32|33|38)/.test(prefix)) {
-        operator = "AXIS";
-      } else if (/^08(95|96|97|98|99)/.test(prefix)) {
-        operator = "Tri";
-      } else if (/^088/.test(prefix)) {
-        operator = "Smartfren";
-      }
-
-      hasil.innerHTML = `
-        <strong>Nomor:</strong> ${nomor}<br>
-        <strong>Operator:</strong> ${operator}<br><br>
-        <small>
-          Operator diperkirakan berdasarkan prefix nomor.
-          Hasil bukan identitas pemilik nomor dan bisa tidak akurat.
-        </small>
-      `;
-
-      try {
-        let riwayat = JSON.parse(
-          localStorage.getItem("riwayatNomor") || "[]"
-        );
-
-        if (!Array.isArray(riwayat)) {
-          riwayat = [];
-        }
-
-        riwayat.unshift({
-          nomor: nomor,
-          operator: operator,
-          waktu: new Date().toLocaleString("id-ID")
-        });
-
-        riwayat = riwayat.slice(0, 10);
-
-        localStorage.setItem(
-          "riwayatNomor",
-          JSON.stringify(riwayat)
-        );
-
-        tampilkanRiwayat();
-      } catch (error) {
-        console.error("Riwayat tidak dapat disimpan:", error);
-      }
-    }
-
-    function tampilkanRiwayat() {
-      const elemen = document.getElementById("riwayat");
-
-      let riwayat = [];
-
-      try {
-        riwayat = JSON.parse(
-          localStorage.getItem("riwayatNomor") || "[]"
-        );
-
-        if (!Array.isArray(riwayat)) {
-          riwayat = [];
-        }
-      } catch (error) {
-        riwayat = [];
-      }
-
-      let html = "<h3>Riwayat Pencarian</h3>";
-
-      if (riwayat.length === 0) {
-        html += "<p>Belum ada riwayat pencarian.</p>";
-      } else {
-        riwayat.forEach(item => {
-          const nomor = document.createElement("span");
-          nomor.textContent = item.nomor || "-";
-
-          const operator = document.createElement("span");
-          operator.textContent = item.operator || "-";
-
-          const waktu = document.createElement("span");
-          waktu.textContent = item.waktu || "-";
-
-          html += `
-            <div class="item-riwayat">
-              <strong>Nomor:</strong>
-              ${nomor.innerHTML}<br>
-              <strong>Operator:</strong>
-              ${operator.innerHTML}<br>
-              <strong>Waktu:</strong>
-              ${waktu.innerHTML}
-            </div>
-          `;
-        });
-
-        html += `
-          <button class="hapus-button" onclick="hapusRiwayat()">
-            Hapus Riwayat
-          </button>
-        `;
-      }
-
-      elemen.innerHTML = html;
-    }
-
-    function hapusRiwayat() {
-      if (confirm("Yakin ingin menghapus semua riwayat pencarian?")) {
-        localStorage.removeItem("riwayatNomor");
-        tampilkanRiwayat();
-      }
-    }
-
-    tampilkanRiwayat();
-    async function cariNamaPenelepon(nomor) {
-  const apiKey = nol_79a3a427dfd0f69264790fafaa4c0bc3352fc092;
-
-  const angka = nomor.replace(/\D/g, "");
-  let e164 = angka;
-
-  if (angka.startsWith("0")) {
-    e164 = "+62" + angka.slice(1);
-  } else if (angka.startsWith("62")) {
-    e164 = "+" + angka;
-  } else {
-    e164 = "+" + angka;
+  if (!nomor) {
+    hasil.textContent = "Masukkan nomor HP terlebih dahulu.";
+    input.focus();
+    return;
   }
+
+  const bersih = nomor.replace(/[\s()-]/g, "");
+
+  if (!/^(08|628|\+628)/.test(bersih)) {
+    hasil.textContent = "Gunakan nomor Indonesia berawalan 08 atau 62.";
+    return;
+  }
+
+  const angka = bersih.replace(/\D/g, "");
+
+  if (angka.length < 10 || angka.length > 15) {
+    hasil.textContent = "Panjang nomor tidak valid.";
+    return;
+  }
+
+  const e164 = angka.startsWith("0")
+    ? "+62" + angka.slice(1)
+    : angka.startsWith("62")
+      ? "+" + angka
+      : "+" + angka;
+
+  const prefix = angka.startsWith("62")
+    ? "0" + angka.slice(2)
+    : angka;
+
+  let operator = "Belum diketahui";
+
+  if (/^08(11|12|13|21|22|23|51|52|53)/.test(prefix)) {
+    operator = "Telkomsel";
+  } else if (/^08(14|15|16|55|56|57|58)/.test(prefix)) {
+    operator = "Indosat";
+  } else if (/^08(17|18|19|59|77|78)/.test(prefix)) {
+    operator = "XL";
+  } else if (/^08(31|32|33|38)/.test(prefix)) {
+    operator = "AXIS";
+  } else if (/^08(95|96|97|98|99)/.test(prefix)) {
+    operator = "Tri";
+  } else if (/^088/.test(prefix)) {
+    operator = "Smartfren";
+  }
+
+  tombol.disabled = true;
+  tombol.textContent = "Sedang mencari...";
+  hasil.textContent = "Menghubungi layanan API...";
+
+  let data = null;
+  let pesan = "";
 
   try {
     const response = await fetch(
       "https://numbers.online/api/v1/lookup/" +
       encodeURIComponent(e164),
       {
+        method: "GET",
         headers: {
-          "X-API-Key": apiKey
+          "X-API-Key": API_KEY,
+          "Accept": "application/json"
         }
       }
     );
 
-    const data = await response.json();
+    const teks = await response.text();
 
-    if (!response.ok) {
-      return "Pencarian gagal: " + (data.error || response.status);
+    try {
+      data = JSON.parse(teks);
+    } catch {
+      data = null;
     }
 
-    return data;
+    if (!response.ok) {
+      pesan = "API mengembalikan status HTTP " + response.status;
+    } else if (!data || typeof data !== "object") {
+      pesan = "Respons API tidak dapat dibaca.";
+    }
   } catch (error) {
-    return "Gagal menghubungi API. Periksa koneksi atau izin CORS.";
+    pesan = "Koneksi gagal. Browser mungkin memblokir API (CORS).";
+  }
+
+  hasil.replaceChildren();
+
+  function baris(label, nilai) {
+    const p = document.createElement("p");
+    const strong = document.createElement("strong");
+
+    strong.textContent = label + ": ";
+    p.appendChild(strong);
+    p.appendChild(document.createTextNode(
+      nilai === undefined || nilai === null || nilai === ""
+        ? "Tidak tersedia"
+        : String(nilai)
+    ));
+
+    hasil.appendChild(p);
+  }
+
+  baris("Nomor", nomor);
+  baris("Perkiraan operator", operator);
+
+  if (pesan) {
+    baris("Status API", pesan);
+  } else {
+    /*
+      Nama dan field lainnya bergantung pada format
+      respons yang benar-benar dikembalikan layanan.
+    */
+    const nama =
+      data.cnam ??
+      data.caller_name ??
+      data.name ??
+      data.callerName;
+
+    baris("Nama penelepon", nama);
+
+    if (nama === undefined || nama === null || nama === "") {
+      const catatan = document.createElement("p");
+      catatan.textContent =
+        "Nama tidak ditemukan pada field nama yang dikenali. Format respons API mungkin berbeda.";
+      hasil.appendChild(catatan);
+    }
+
+    baris("Jenis saluran", data.line_type ?? data.lineType);
+    baris("Operator dari API", data.carrier);
+  }
+
+  const catatan = document.createElement("small");
+  catatan.style.display = "block";
+  catatan.style.marginTop = "12px";
+  catatan.textContent =
+    "Informasi nama bukan verifikasi identitas resmi pemilik nomor.";
+  hasil.appendChild(catatan);
+
+  try {
+    let riwayat = JSON.parse(
+      localStorage.getItem("riwayatNomor") || "[]"
+    );
+
+    if (!Array.isArray(riwayat)) riwayat = [];
+
+    riwayat.unshift({
+      nomor: nomor,
+      operator: operator,
+      waktu: new Date().toLocaleString("id-ID")
+    });
+
+    localStorage.setItem(
+      "riwayatNomor",
+      JSON.stringify(riwayat.slice(0, 10))
+    );
+
+    tampilkanRiwayat();
+  } catch (error) {
+    console.error("Riwayat gagal disimpan:", error);
+  }
+
+  tombol.disabled = false;
+  tombol.textContent = "🔍 Cari Nomor";
+}
+
+function tampilkanRiwayat() {
+  const elemen = document.getElementById("riwayat");
+  let riwayat = [];
+
+  try {
+    riwayat = JSON.parse(
+      localStorage.getItem("riwayatNomor") || "[]"
+    );
+    if (!Array.isArray(riwayat)) riwayat = [];
+  } catch {
+    riwayat = [];
+  }
+
+  elemen.replaceChildren();
+
+  const judul = document.createElement("h3");
+  judul.textContent = "Riwayat Pencarian";
+  elemen.appendChild(judul);
+
+  if (riwayat.length === 0) {
+    const p = document.createElement("p");
+    p.textContent = "Belum ada riwayat pencarian.";
+    elemen.appendChild(p);
+    return;
+  }
+
+  riwayat.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "item-riwayat";
+    div.textContent =
+      "Nomor: " + (item.nomor || "-") +
+      " | Operator: " + (item.operator || "-") +
+      " | Waktu: " + (item.waktu || "-");
+    elemen.appendChild(div);
+  });
+
+  const tombol = document.createElement("button");
+  tombol.className = "hapus-button";
+  tombol.textContent = "Hapus Riwayat";
+  tombol.onclick = hapusRiwayat;
+  elemen.appendChild(tombol);
+}
+
+function hapusRiwayat() {
+  if (confirm("Yakin ingin menghapus semua riwayat pencarian?")) {
+    localStorage.removeItem("riwayatNomor");
+    tampilkanRiwayat();
   }
 }
-  </script>
+
+tampilkanRiwayat();
+</script>
 </body>
 </html>
