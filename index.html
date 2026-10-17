@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FAH97 CekNomor - Pencarian Nomor HP</title>
+
   <style>
     * {
       box-sizing: border-box;
@@ -129,6 +130,30 @@
       overflow-wrap: anywhere;
     }
 
+    #riwayat {
+      margin-top: 20px;
+      padding: 18px;
+      border-radius: 12px;
+      background: #0b1120;
+      border: 1px solid #334155;
+      line-height: 1.8;
+      overflow-wrap: anywhere;
+    }
+
+    #riwayat h3 {
+      margin-bottom: 12px;
+    }
+
+    .item-riwayat {
+      padding: 12px 0;
+      border-bottom: 1px solid #334155;
+    }
+
+    .hapus-button {
+      margin-top: 12px;
+      background: #b91c1c;
+    }
+
     .info {
       margin-top: 25px;
       padding: 18px;
@@ -159,8 +184,8 @@
     }
   </style>
 </head>
-<body>
 
+<body>
   <header>
     <div class="logo">FAH97 Cek Nomor</div>
     <div class="badge">PENCARIAN NOMOR HP</div>
@@ -178,27 +203,35 @@
 
     <section class="search-box">
       <label for="nomor">Nomor telepon</label>
+
       <input
         type="tel"
         id="nomor"
         placeholder="Contoh: 081234567890"
         autocomplete="off"
       >
+
       <button onclick="cariNomor()">🔍 Cari Nomor</button>
 
       <div id="hasil" aria-live="polite"></div>
+    </section>
+
+    <section id="riwayat">
+      <h3>Riwayat Pencarian</h3>
+      <p>Belum ada riwayat pencarian.</p>
     </section>
 
     <div class="info">
       🛡️ <strong>Gunakan dengan bijak</strong><br>
       Pencarian ini belum terhubung ke database nomor telepon.
       Jangan membagikan data pribadi orang lain tanpa izin.
+      Riwayat disimpan di browser perangkat ini.
     </div>
   </main>
 
   <footer>
-    © 2026 CekNomor  Pencarian Nomor HP dan Laporan Komunitas
-    Kritik dan saran : @FahAkb97@gmail.com
+    © 2026 FAH97 Cek Nomor<br>
+    Kritik dan saran: @FahAkb97@gmail.com
   </footer>
 
   <script>
@@ -215,83 +248,141 @@
         return;
       }
 
-      const angkaValidasi = nomor.replace(/\D/g, "");
+      const nomorBersih = nomor.replace(/[\s()-]/g, "");
 
-if (!/^(08|628|\+628)/.test(nomor.replace(/[\s()-]/g, "")) ||
-    angkaValidasi.length < 10 ||
-    angkaValidasi.length > 15) {
-  hasil.textContent = "Format nomor HP Indonesia tidak valid.";
-  return;
-}
+      if (!/^(08|628|\+628)/.test(nomorBersih)) {
+        hasil.textContent = "Gunakan nomor HP Indonesia dengan awalan 08 atau 62.";
+        return;
+      }
 
-    const angka = nomor.replace(/\D/g, "");
-let operator = "Belum dapat diperkirakan";
+      const angka = nomor.replace(/\D/g, "");
 
-const prefix = angka.startsWith("62")
-  ? angka.slice(2)
-  : angka.startsWith("0")
-  ? angka.slice(1)
-  : angka;
+      if (angka.length < 10 || angka.length > 15) {
+        hasil.textContent = "Panjang nomor HP tidak valid.";
+        return;
+      }
 
-if (/^(0811|0812|0813|0821|0822|0823|0851|0852|0853)/.test("0" + prefix)) {
-  operator = "Telkomsel";
-} else if (/^(0814|0815|0816|0855|0856|0857|0858)/.test("0" + prefix)) {
-  operator = "Indosat";
-} else if (/^(0817|0818|0819|0859|0877|0878)/.test("0" + prefix)) {
-  operator = "XL";
-} else if (/^(0831|0832|0833|0838)/.test("0" + prefix)) {
-  operator = "AXIS";
-} else if (/^(0895|0896|0897|0898|0899)/.test("0" + prefix)) {
-  operator = "Tri";
-} else if (/^(0881|0882|0883|0884|0885|0886|0887|0888|0889)/.test("0" + prefix)) {
-  operator = "Smartfren";
-}
-          let riwayat = JSON.parse(localStorage.getItem("riwayatNomor") || "[]");
+      const prefix = angka.startsWith("62")
+        ? "0" + angka.slice(2)
+        : angka.startsWith("0")
+        ? angka
+        : "";
 
-      riwayat.unshift({
-        nomor: nomor,
-        operator: operator,
-        waktu: new Date().toLocaleString("id-ID")
-      });
+      let operator = "Belum dapat diperkirakan";
 
-      riwayat = riwayat.slice(0, 10);
+      if (/^08(11|12|13|21|22|23|51|52|53)/.test(prefix)) {
+        operator = "Telkomsel";
+      } else if (/^08(14|15|16|55|56|57|58)/.test(prefix)) {
+        operator = "Indosat";
+      } else if (/^08(17|18|19|59|77|78)/.test(prefix)) {
+        operator = "XL";
+      } else if (/^08(31|32|33|38)/.test(prefix)) {
+        operator = "AXIS";
+      } else if (/^08(95|96|97|98|99)/.test(prefix)) {
+        operator = "Tri";
+      } else if (/^088/.test(prefix)) {
+        operator = "Smartfren";
+      }
 
-      localStorage.setItem("riwayatNomor", JSON.stringify(riwayat));  hasil.innerHTML = `
+      hasil.innerHTML = `
         <strong>Nomor:</strong> ${nomor}<br>
         <strong>Operator:</strong> ${operator}<br><br>
         <small>
           Operator diperkirakan berdasarkan prefix nomor.
-          Hasil ini bukan identitas pemilik nomor.
+          Hasil bukan identitas pemilik nomor dan bisa tidak akurat.
         </small>
       `;
+
+      try {
+        let riwayat = JSON.parse(
+          localStorage.getItem("riwayatNomor") || "[]"
+        );
+
+        if (!Array.isArray(riwayat)) {
+          riwayat = [];
+        }
+
+        riwayat.unshift({
+          nomor: nomor,
+          operator: operator,
+          waktu: new Date().toLocaleString("id-ID")
+        });
+
+        riwayat = riwayat.slice(0, 10);
+
+        localStorage.setItem(
+          "riwayatNomor",
+          JSON.stringify(riwayat)
+        );
+
+        tampilkanRiwayat();
+      } catch (error) {
+        console.error("Riwayat tidak dapat disimpan:", error);
+      }
     }
-        
-function tampilkanRiwayat() {
-  const riwayat = JSON.parse(
-    localStorage.getItem("riwayatNomor") || "[]"
-  );
 
-  let html = "<h3>Riwayat Pencarian</h3>";
+    function tampilkanRiwayat() {
+      const elemen = document.getElementById("riwayat");
 
-  if (riwayat.length === 0) {
-    html += "<p>Belum ada riwayat pencarian.</p>";
-  } else {
-    riwayat.forEach(item => {
-      html += `<p>
-        Nomor: ${item.nomor}<br>
-        Operator: ${item.operator}<br>
-        Waktu: ${item.waktu}
-      </p><hr>`;
-    });
-  }
+      let riwayat = [];
 
-  const elemen = document.getElementById("riwayat");
+      try {
+        riwayat = JSON.parse(
+          localStorage.getItem("riwayatNomor") || "[]"
+        );
 
-  if (elemen) {
-    elemen.innerHTML = html;
-  }
-}
+        if (!Array.isArray(riwayat)) {
+          riwayat = [];
+        }
+      } catch (error) {
+        riwayat = [];
+      }
+
+      let html = "<h3>Riwayat Pencarian</h3>";
+
+      if (riwayat.length === 0) {
+        html += "<p>Belum ada riwayat pencarian.</p>";
+      } else {
+        riwayat.forEach(item => {
+          const nomor = document.createElement("span");
+          nomor.textContent = item.nomor || "-";
+
+          const operator = document.createElement("span");
+          operator.textContent = item.operator || "-";
+
+          const waktu = document.createElement("span");
+          waktu.textContent = item.waktu || "-";
+
+          html += `
+            <div class="item-riwayat">
+              <strong>Nomor:</strong>
+              ${nomor.innerHTML}<br>
+              <strong>Operator:</strong>
+              ${operator.innerHTML}<br>
+              <strong>Waktu:</strong>
+              ${waktu.innerHTML}
+            </div>
+          `;
+        });
+
+        html += `
+          <button class="hapus-button" onclick="hapusRiwayat()">
+            Hapus Riwayat
+          </button>
+        `;
+      }
+
+      elemen.innerHTML = html;
+    }
+
+    function hapusRiwayat() {
+      if (confirm("Yakin ingin menghapus semua riwayat pencarian?")) {
+        localStorage.removeItem("riwayatNomor");
+        tampilkanRiwayat();
+      }
+    }
+
+    tampilkanRiwayat();
   </script>
-
 </body>
 </html>
