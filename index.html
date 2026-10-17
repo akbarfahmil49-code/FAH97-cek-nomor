@@ -219,10 +219,34 @@
         return;
       }
 
-      hasil.textContent =
-        "Nomor yang dimasukkan: " + nomor +
-        ". Fitur pencarian database belum tersedia. " +
-        "Website ini baru berupa tampilan awal.";
+    const angka = nomor.replace(/\D/g, "");
+let operator = "Belum dapat diperkirakan";
+
+const prefix = angka.startsWith("62")
+  ? angka.slice(2)
+  : angka.startsWith("0")
+  ? angka.slice(1)
+  : angka;
+
+if (/^(0811|0812|0813|0821|0822|0823|0851|0852|0853)/.test("0" + prefix)) {
+  operator = "Telkomsel";
+} else if (/^(0814|0815|0816|0855|0856|0857|0858)/.test("0" + prefix)) {
+  operator = "Indosat";
+} else if (/^(0817|0818|0819|0859|0877|0878)/.test("0" + prefix)) {
+  operator = "XL";
+} else if (/^(0831|0832|0833|0838)/.test("0" + prefix)) {
+  operator = "AXIS";
+} else if (/^(0895|0896|0897|0898|0899)/.test("0" + prefix)) {
+  operator = "Tri";
+} else if (/^(0881|0882|0883|0884|0885|0886|0887|0888|0889)/.test("0" + prefix)) {
+  operator = "Smartfren";
+}
+
+hasil.textContent =
+  "Nomor: " + nomor +
+  "\nPerkiraan operator: " + operator +
+  "\n\nCatatan: hasil ini berdasarkan awalan nomor, bukan verifikasi operator aktif.";
+        
     }
   </script>
 
